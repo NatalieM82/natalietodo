@@ -1,0 +1,68 @@
+html { 
+	overflow-y:scroll;
+}
+
+body { 
+	padding-top:50px; 
+	padding-bottom:50px; 
+}
+
+.container {
+	position: relative;
+}
+
+#todo-list{ 
+	margin-bottom:30px;
+}
+.taskDone {
+	text-decoration: line-through;
+}
+
+.jumbotron {
+	color:#ffffff;
+	background-color: #ffffff;
+	background-image: url(../images/header.png);
+}
+
+.jumbotron h1 {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.todoNum, .btn{
+	background-color: #a5738d;
+	border: 1px solid #7b4462;
+}
+
+.btn:hover, .btn:active, .btn:focus {
+	background-color: #a5738d;
+	border: 1px solid #7b4462;
+	outline: 0 none;
+}
+
+.removeTag, .sendTeg{
+	float: right;
+	margin-right: 5px;
+}
+
+.container .jumbotron {
+	width: 100%;
+}
+
+.editForm {
+	text-align: center;
+}
+
+.editBtn{
+	margin-top: 5px;
+}
+
+
+.logo{
+	width: 100px;
+	height: 100px;
+	max-width: 100%;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 20px;
+}
