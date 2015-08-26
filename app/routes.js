@@ -104,7 +104,7 @@ module.exports = function(app) {
 
     });
 
-    app.post('/api/todos/sendEmail/:from_email/:to_email/:text', function(req, res) {
+    app.get('/api/todos/sendEmail/:from_email/:to_email/:text', function(req, res) {
         console.log(req.params.from_email + req.params.to_email + req.params.text);
 
         //create reusable transporter object using SMTP transport
