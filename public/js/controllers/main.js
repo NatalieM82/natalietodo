@@ -60,4 +60,18 @@ angular.module('todoController', [])
                     $scope.todos = data; // assign our new list of todos
                 });
         };
+
+        // SEND ==================================================================
+        // open email box
+        $scope.openEmailBox = function(text) {
+            $scope.emailMessage = text;
+        };
+
+        $scope.sendEmail = function(from, to, text) {
+            Todos.sendEmail(from, to, text)
+                // if successful creation, call our get function to get all the new todos
+                .success(function(data) {
+                    $scope.todos = data; // assign our new list of todos
+                });
+        };
     });

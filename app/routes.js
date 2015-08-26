@@ -2,6 +2,7 @@
 
 // load the todo model
 var Todo = require('./models/todo');
+var nodemailer = require('nodemailer');
 
 // expose the routes to our app with module.exports
 module.exports = function(app) {
@@ -101,6 +102,34 @@ module.exports = function(app) {
             });
         });
 
+    });
+
+    app.post('/api/todos/sendEmail/:from_email/:to_email/:text', function(req, res) {
+        console.log(req.params.from_email + req.params.to_email + req.params.text);
+
+        //create reusable transporter object using SMTP transport
+        var transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: 'flexiprice@gmail.com',
+                pass: 'flexi2015'
+            }
+        });
+
+        var mailOptions = {
+            from: req.params.from_email, 
+            to: req.params.to_email, 
+            subject: 'Hello - a todo task was shared with you ✔',
+            html: 'From: ' + req.params.from_email + '<br>' + req.params.text
+        };
+
+        transporter.sendMail(mailOptions, function(err, info){
+            if(err){
+                res.send(err)
+            }else{
+                console.log('Message sent: ' + info.response);
+            }
+        });
     });
 
     // application -------------------------------------------------------------

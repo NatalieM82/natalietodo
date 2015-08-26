@@ -11,12 +11,13 @@
     <title>Natalie's Todo App</title>
 
     <!-- SCROLLS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"><!-- load bootstrap -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"></script><!-- load angular 1.2.4 -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
     <script src="js/controllers/main.js"></script> <!-- load up our controller -->
     <script src="js/services/todos.js"></script> <!-- load our todo service -->
@@ -25,61 +26,91 @@
 </head>
 <!-- SET THE CONTROLLER AND GET ALL TODOS -->
 <body ng-controller="mainController">
-    <div class="container">
+<div class="container">
 
-        <!-- HEADER AND TODO COUNT -->
-        <div class="jumbotron text-center">
+    
+  <!-- Trigger the modal with a button -->
 
-            <a href="http://natalim82.wix.com/nataliemenahem">
-                <img src="images/NM_Icon.png" class="logo">
-            </a>
-               
-            <h1>I'm a Todo-aholic <span class="label label-info todoNum">{{ todos.length }}</span></h1>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Send by email</h4>
         </div>
-
-        <!-- TODO LIST -->
-        <div id="todo-list" class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-
-                <!-- LOOP OVER THE TODOS IN $scope.todos -->
-                <div class="checkbox" ng-repeat="todo in todos">
-                    
-                    <label>
-                        <input type="checkbox" ng-checked="todo.done" ng-click="todoDone(todo._id)"/> 
-                    </label>
-                    <span ng-dblclick="showEdit=!showEdit" ng-class="{taskDone:todo.done}">{{todo.text}}</span>
-
-                    <span class="glyphicon glyphicon-remove removeTag" ng-click="deleteTodo(todo._id)"></span>
-                    <i class="fa fa-paper-plane sendTeg"></i>
-
-                    <form ng-show="showEdit" class="editForm">
-                        <input type="text" class="form-control input-xs text-center" placeholder="todo.text" ng-model="todo.text">
-                        <button type="submit" class="btn btn-primary btn-s editBtn" ng-click="editTodo(todo._id, todo.text)">Edit</button>
-                    </form>
-                </div>
-
-            </div>
+        <div class="modal-body">
+          <p>Please enter your email address:</p>
+          <input type="email" name="FromEmail" class="form-control" ng-model="FromEmail">
+          <br>
+          <p>Who would you like to send this email?</p>
+          <input type="email" name="toEmail" class="form-control" ng-model="toEmail">
+          <br>
+          <p>Message:</p>
+          <textarea id="emailMessage" ng-model="emailMessage" class="form-control"> </textarea>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="sendEmail(FromEmail, toEmail, emailMessage)">Send <i class="fa fa-paper-plane sendTeg"></i></button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<!-- HEADER AND TODO COUNT -->
+<div class="jumbotron text-center">
+    <h1>I'm a Todo-aholic <span class="label label-info todoNum">{{ todos.length }}</span></h1>
+</div>
 
-        <!-- FORM TO CREATE TODOS -->
-        <div id="todo-form" class="row">
-            <div class="col-sm-8 col-sm-offset-2 text-center">
-                <form>
-                    <div class="form-group">
+<!-- TODO LIST -->
+<div id="todo-list" class="row">
+    <div class="col-sm-4 col-sm-offset-4">
 
-                        <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                        <input type="text" class="form-control input-lg text-center" placeholder="Add your task" ng-model="formData.text">
-                    </div>
+        <!-- LOOP OVER THE TODOS IN $scope.todos -->
+        <div class="checkbox" ng-repeat="todo in todos">
 
-                    <!-- createToDo() WILL CREATE NEW TODOS -->
-                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
-                </form>
-            </div>
+            <label>
+                <input type="checkbox" ng-checked="todo.done" ng-click="todoDone(todo._id)"/> 
+            </label>
+            <span ng-dblclick="showEdit=!showEdit" ng-class="{taskDone:todo.done}">{{todo.text}}</span>
+
+            <span class="glyphicon glyphicon-remove removeTag" ng-click="deleteTodo(todo._id)"></span>
+            <i class="fa fa-paper-plane sendTeg" ng-click="openEmailBox(todo.text)" data-toggle="modal" data-target="#myModal"></i>
+
+            <form ng-show="showEdit" class="editForm">
+                <input type="text" class="form-control input-xs text-center" placeholder="todo.text" ng-model="todo.text">
+                <button type="submit" class="btn btn-primary btn-sm editBtn" ng-click="editTodo(todo._id, todo.text)">Edit</button>
+            </form>
         </div>
 
     </div>
+</div>
 
+<!-- FORM TO CREATE TODOS -->
+<div id="todo-form" class="row">
+    <div class="col-sm-8 col-sm-offset-2 text-center">
+        <form>
+            <div class="form-group">
 
+                <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                <input type="text" class="form-control input-lg text-center" placeholder="Add your task" ng-model="formData.text">
+            </div>
+
+            <!-- createToDo() WILL CREATE NEW TODOS -->
+            <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+        </form>
+    </div>
+</div>
+
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom myFooter" role="navigation">
+  <div class="container">
+    <h6>Natalie Menahem |  <a href="http://natalim82.wix.com/nataliemenahem">Portfolio</a> | Phone: 052-8333189 | Email: natalim82@gmail.com</h6>
+</div>
+</nav>
 
 </body>
 </html>

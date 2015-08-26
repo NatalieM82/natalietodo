@@ -4,7 +4,7 @@ html {
 
 body { 
 	padding-top:50px; 
-	padding-bottom:50px; 
+	padding-bottom:80px; 
 }
 
 .container {
@@ -32,6 +32,7 @@ body {
 .todoNum, .btn{
 	background-color: #a5738d;
 	border: 1px solid #7b4462;
+	color: #ffffff;
 }
 
 .btn:hover, .btn:active, .btn:focus {
@@ -43,6 +44,9 @@ body {
 .removeTag, .sendTeg{
 	float: right;
 	margin-right: 5px;
+	margin-left: 3px;
+	vertical-align: middle;
+	margin-top: 3px;
 }
 
 .container .jumbotron {
@@ -57,12 +61,21 @@ body {
 	margin-top: 5px;
 }
 
-
-.logo{
-	width: 100px;
-	height: 100px;
-	max-width: 100%;
-	display: inline-block;
+.myFooter .container>h6 {
+	text-align: center;
 	vertical-align: middle;
-	margin-right: 20px;
+	padding-top: 10px;
 }
+
+@media(min-width:768px) {
+	.jumbotron h1 {
+	    font-size: 40px;
+	}
+}
+
+@media(max-width:768px) {
+	.jumbotron h1 {
+	    font-size: 28px;
+	}
+}
+
