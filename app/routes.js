@@ -104,7 +104,7 @@ module.exports = function(app) {
 
     });
 
-    app.get('/api/todos/sendEmail/:from_email/:to_email/:text', function(req, res) {
+    app.post('/api/todos/sendEmail/:from_email/:to_email/:text', function(req, res) {
         console.log(req.params.from_email + req.params.to_email + req.params.text);
 
         //create reusable transporter object using SMTP transport
@@ -128,6 +128,12 @@ module.exports = function(app) {
                 res.send(err)
             }else{
                 console.log('Message sent: ' + info.response);
+                 // get and return all the todos after you create another
+                Todo.find(function(err, todos) {
+                    if (err)
+                        res.send(err)
+                    res.json(todos);
+                });
             }
         });
     });
